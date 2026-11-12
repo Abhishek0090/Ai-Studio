@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #f6f7fb;
+  --foreground: #0d0f1c;
+  --card: #ffffff;
+  --muted: #eef0f6;
+  --muted-foreground: #565a70;
+  --border: #e2e4ee;
+  --input: #d6d9e6;
+  --brand-start-deep: #991b1b;
+  --brand-start: #dc2626;
+  --brand-end: #ea580c;
+  --brand-end-deep: #c2410c;
+  --ring: #ea580c;
+  --success: #15803d;
+  --danger: #b91c1c;
+  --coin-bg: #fef3c7;
+  --coin-fg: #92400e;
+  color-scheme: light;
+}
+
+.dark {
+  --background: #08090f;
+  --foreground: #eceef7;
+  --card: #10121c;
+  --muted: #191b28;
+  --muted-foreground: #a3a7bd;
+  --border: #252838;
+  --input: #2e3246;
+  --brand-start-deep: #b91c1c;
+  --brand-start: #ef4444;
+  --brand-end: #f97316;
+  --brand-end-deep: #ea580c;
+  --ring: #fb923c;
+  --success: #4ade80;
+  --danger: #f87171;
+  --coin-bg: #3a2a08;
+  --coin-fg: #fcd34d;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-brand-start: var(--brand-start);
+  --color-brand-end: var(--brand-end);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-coin-bg: var(--coin-bg);
+  --color-coin-fg: var(--coin-fg);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@utility bg-brand {
+  background-image: linear-gradient(135deg, var(--brand-start-deep) 0%, var(--brand-start) 35%, var(--brand-end) 75%, var(--brand-end-deep) 100%);
+}
+
+@utility text-brand {
+  background-image: linear-gradient(90deg, var(--brand-start) 20%, var(--brand-end) 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Soft glow used behind hero and empty states. */
+@utility bg-brand-glow {
+  background-image:
+    radial-gradient(40rem 20rem at 15% 0%, color-mix(in oklab, var(--brand-start) 22%, transparent), transparent 70%),
+    radial-gradient(40rem 20rem at 85% 0%, color-mix(in oklab, var(--brand-end) 18%, transparent), transparent 70%);
+}
+
+/* Gradient border: wrap content in an element with this utility. */
+@utility border-brand {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(135deg, var(--brand-start), var(--brand-end)) border-box;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--brand-start) 30%, transparent);
+}
+
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to { background-position: 200% 0; }
+}
+
+@utility animate-shimmer {
+  background-image: linear-gradient(
+    90deg,
+    var(--muted) 0%,
+    color-mix(in oklab, var(--brand-start) 14%, var(--muted)) 40%,
+    color-mix(in oklab, var(--brand-end) 14%, var(--muted)) 60%,
+    var(--muted) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
